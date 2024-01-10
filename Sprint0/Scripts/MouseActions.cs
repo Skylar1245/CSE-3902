@@ -59,6 +59,7 @@ namespace Sprint0.Scripts
 
         private void LeftClick()
         {
+            Debug.WriteLine("Left click at " + state.Position);
             if (state.Position.Y <= 450)
             {
                 if (state.Position.X <= 800)

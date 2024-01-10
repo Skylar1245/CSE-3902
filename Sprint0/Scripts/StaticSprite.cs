@@ -52,6 +52,7 @@ namespace Sprint0.Scripts
                 destinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width * 4, height * 4);
             }
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
+            spriteBatch.End();
         }
     }
 }

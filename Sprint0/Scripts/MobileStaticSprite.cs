@@ -6,6 +6,13 @@ namespace Sprint0.Scripts
 {
     internal class MobileStaticSprite : StaticSprite
     {
+        public bool IsVisible { get; set; }
+        public Vector2 Position { get; set; }
+        public Texture2D Texture { get; set; }
+
+        private int currentFrame;
+        private int totalFrames;
+
         private int timeSinceLastFrame = 0;
         private int millisecondsPerFrame = 100;
 
@@ -30,11 +37,15 @@ namespace Sprint0.Scripts
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)
-            {
+        {
                 timeSinceLastFrame -= millisecondsPerFrame;
                 Move();
             }
 
+            //Overloaded with samplterState, fixes blurry sprites from upscaling
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
+            spriteBatch.End();
         }
     }
 }
