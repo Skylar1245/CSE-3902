@@ -8,13 +8,18 @@ namespace Sprint0.Scripts
 {
     internal class MouseActions : IController
     {
+        /// <summary>
+        /// Enumerator for MouseButtons, supports Left, Right, and Middle clicks.
+        /// </summary>
         public enum MouseButtons
         {
             Left,
             Right,
             Middle
         }
-
+        /// <summary>
+        /// Enumerator for MousePositions, supports Quads[1 - 4].
+        /// </summary>
         public enum MousePositions
         {
             Quad1,
@@ -22,13 +27,13 @@ namespace Sprint0.Scripts
             Quad3,
             Quad4
         }
-        public Dictionary<object, Action> mappings { get; }
-        public int timeSinceLastFrame { get; set; }
-        public int millisecondsPerFrame { get; set; }
+        public Dictionary<object, Action> Mappings { get; }
+        public int TimeSinceLastFrame { get; set; }
+        public int MillisecondsPerFrame { get; set; }
         public MouseState state = Mouse.GetState();
         public MouseActions()
         {
-            mappings = new Dictionary<object, Action>
+            Mappings = new Dictionary<object, Action>
             {
                 { MouseButtons.Left, LeftClick }
             };
@@ -40,11 +45,11 @@ namespace Sprint0.Scripts
 
             if (state.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed)
             {
-                mappings[MouseButtons.Left].Invoke();
+                Mappings[MouseButtons.Left].Invoke();
             }
             if (state.RightButton == ButtonState.Released && currentState.RightButton == ButtonState.Pressed)
             {
-                mappings[MouseButtons.Right].Invoke();
+                Mappings[MouseButtons.Right].Invoke();
             }
 
             state = Mouse.GetState();
@@ -52,7 +57,7 @@ namespace Sprint0.Scripts
 
         public void Add(object key, Action action)
         {
-            mappings.Add(key, action);
+            Mappings.Add(key, action);
         }
 
         private void LeftClick()
@@ -61,22 +66,22 @@ namespace Sprint0.Scripts
             {
                 if (state.Position.X <= 800)
                 {
-                    mappings[MousePositions.Quad1].Invoke();
+                    Mappings[MousePositions.Quad1].Invoke();
                 }
                 else
                 {
-                    mappings[MousePositions.Quad2].Invoke();
+                    Mappings[MousePositions.Quad2].Invoke();
                 }
             }
             else
             {
                 if (state.Position.X < 800)
                 {
-                    mappings[MousePositions.Quad3].Invoke();
+                    Mappings[MousePositions.Quad3].Invoke();
                 }
                 else
                 {
-                    mappings[MousePositions.Quad4].Invoke();
+                    Mappings[MousePositions.Quad4].Invoke();
                 }
 
             }

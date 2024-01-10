@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using Sprint0.Scripts.Interfaces;
+using System.Collections.Generic;
 
 namespace Sprint0
 {
     internal class Text : ISprite
     {
-        private SpriteFont Font;
+        private readonly SpriteFont Font;
         public string Data;
 
         public bool IsVisible { get; set; }
         public Vector2 Position { get; set; }
         public Texture2D Texture { get; set; }
+        public int TimeSinceLastFrame { get; set; }
+        public int MillisecondsPerFrame { get; set; }
 
+        public Rectangle SpritePosition { get; set; }
+        public int Gap { get; set; }
+        public int CurrentFrame { get; set; }
+        public int TotalFrames { get; set; }
         public Text(SpriteFont font, string data, Vector2 position)
         {
             Font = font;

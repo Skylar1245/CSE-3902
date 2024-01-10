@@ -1,12 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System.Xml.Serialization;
 
 namespace Sprint0.Scripts.Interfaces
 {
@@ -15,11 +9,28 @@ namespace Sprint0.Scripts.Interfaces
     /// </summary>
     internal interface IController
     {
-        Dictionary<object, Action> mappings { get; }
-        int timeSinceLastFrame { get; set; }
-        int millisecondsPerFrame { get; set; }
+        /// <summary>
+        /// Map of all buttons and their actions.
+        /// </summary>
+        Dictionary<object, Action> Mappings { get; }
+        /// <summary>
+        /// Time since last frame occurred, used to with millisecondsPerFrame.
+        /// </summary>
+        int TimeSinceLastFrame { get; set; }
+        /// <summary>
+        /// Time allotted per frame, used with timeSinceLastFrame.
+        /// </summary>
+        int MillisecondsPerFrame { get; set; }
+        /// <summary>
+        /// Update method.
+        /// </summary>
+        /// <param name="gameTime"></param>
         void Update(GameTime gameTime);
-
+        /// <summary>
+        /// Adds the <paramref name="key"/> and its associated <paramref name="action"/> to this controllers mapping.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="action"></param>
         void Add(object key, Action action);
     }
 }

@@ -1,35 +1,56 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Scripts.Interfaces;
 using System.Collections.Generic;
 
 namespace Sprint0.Scripts
 {
-    internal class StaticSprite : ISprite
+    internal class MobileStaticSprite : ISprite
     {
         public bool IsVisible { get; set; }
         public Vector2 Position { get; set; }
         public Texture2D Texture { get; set; }
-        private Rectangle SpritePosition = new Rectangle(0, 0, 0, 0);
+        public int TimeSinceLastFrame { get; set; }
+        public int MillisecondsPerFrame { get; set; }
+        public Rectangle SpritePosition { get; set; }
+        public int Gap { get; set; }
+        public int CurrentFrame { get; set; }
+        public int TotalFrames { get; set; }
 
-        public StaticSprite(Texture2D texture, Vector2 position)
+        public MobileStaticSprite(Texture2D texture, Vector2 position)
         {
             Texture = texture;
             Position = position;
             IsVisible = true;
+
+            TimeSinceLastFrame = 0;
+            MillisecondsPerFrame = 100;
         }
 
-        public StaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition)
+        public MobileStaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition)
         {
             Texture = texture;
             Position = position;
             SpritePosition = spritePosition;
             IsVisible = true;
+
+            TimeSinceLastFrame = 0;
+            MillisecondsPerFrame = 100;
         }
 
-        public void Update(GameTime gameTime = null)
+        private void Move()
         {
-           //static sprite does not need updated
+            _ = Position.Y > 950 ? Position = new Vector2(Position.X, -50) : Position = new Vector2(Position.X, Position.Y + 10);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            TimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (TimeSinceLastFrame > MillisecondsPerFrame)
+            {
+                TimeSinceLastFrame -= MillisecondsPerFrame;
+                if (IsVisible) Move();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

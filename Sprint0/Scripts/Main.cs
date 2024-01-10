@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint0.Scripts;
 using Sprint0.Scripts.Interfaces;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Sprint0
@@ -11,7 +10,7 @@ namespace Sprint0
     public class Main : Game
     {
         //Default
-        private GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         //All sprites go in here
         private List<ISprite> sprites;
@@ -21,9 +20,11 @@ namespace Sprint0
 
         public Main()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 900;
-            graphics.PreferredBackBufferWidth = 1600;
+            graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferHeight = 900,
+                PreferredBackBufferWidth = 1600
+            };
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -32,7 +33,7 @@ namespace Sprint0
         {
             //Keys
             keyboardActions = new KeyboardActions();
-            keyboardActions.mappings.Add(Keys.D0, Exit);
+            keyboardActions.Add(Keys.D0, Exit);
             keyboardActions.Add(Keys.D1, () => { sprites[5].Focus(sprites); });
             keyboardActions.Add(Keys.D2, () => { sprites[6].Focus(sprites); });
             keyboardActions.Add(Keys.D3, () => { sprites[7].Focus(sprites); });
@@ -101,7 +102,7 @@ namespace Sprint0
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Gray);
-            //Overloaded with samplterState, fixes blurry sprites from upscaling
+            //Overloaded with samplerState, fixes blurry sprites from upscaling
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             foreach (ISprite sprite in sprites)
             {

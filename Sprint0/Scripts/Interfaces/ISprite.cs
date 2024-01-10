@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Sprint0.Scripts.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace Sprint0.Scripts.Interfaces
@@ -22,7 +21,16 @@ namespace Sprint0.Scripts.Interfaces
         /// The texture this sprite will read from.
         /// </summary>
         Texture2D Texture { get; set; }
-
+        int TimeSinceLastFrame { get; set; }
+        int MillisecondsPerFrame { get; set; }
+        Rectangle SpritePosition { get; set; }
+        int Gap { get; set; }
+        int CurrentFrame { get; set; }
+        int TotalFrames { get; set; }
+        /// <summary>
+        /// Makes this sprite the only visible sprite in <paramref name="sprites"/>.
+        /// </summary>
+        /// <param name="sprites"></param>
         void Focus(List<ISprite> sprites);
 
         /// <summary>
