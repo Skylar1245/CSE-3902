@@ -30,11 +30,10 @@ namespace Sprint0.Scripts
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)
-            {
+        {
                 timeSinceLastFrame -= millisecondsPerFrame;
                 Move();
             }
-
         }
     }
 }
