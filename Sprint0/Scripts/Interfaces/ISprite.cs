@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Sprint0.Scripts.Interfaces;
+using System.Collections.Generic;
 
 namespace Sprint0.Scripts.Interfaces
 {
@@ -21,6 +22,8 @@ namespace Sprint0.Scripts.Interfaces
         /// The texture this sprite will read from.
         /// </summary>
         Texture2D Texture { get; set; }
+
+        void Focus(List<ISprite> sprites);
 
         /// <summary>
         /// Update method of this sprite, optionally pass 

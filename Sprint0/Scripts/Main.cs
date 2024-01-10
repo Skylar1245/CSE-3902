@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint0.Scripts;
+using Sprint0.Scripts.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Sprint0
 {
@@ -10,19 +13,11 @@ namespace Sprint0
         //Default
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        //Sprites from atlas
-        private AnimatedSprite animatedVita;
-        private StaticSprite staticMort;
-        private MobileAnimatedSprite mobileAnimatedDoux;
-        private MobileStaticSprite mobileStaticTart;
-        //Sprites from big file
-        private StaticSprite staticOctorok;
-        private MobileStaticSprite mobileStaticOctorok;
-        //Text
-        private Text screenText;
+        //All sprites go in here
+        private List<ISprite> sprites;
         //Controllers
-        private KeyboardActions keyboardActions;
-        private MouseActions mouseActions;
+        private IController keyboardActions;
+        private IController mouseActions;
 
         public Main()
         {
@@ -38,18 +33,20 @@ namespace Sprint0
             //Keys
             keyboardActions = new KeyboardActions();
             keyboardActions.mappings.Add(Keys.D0, Exit);
-            //TODO: Make this more coherent
-            keyboardActions.Add(Keys.D1, () => { staticMort.IsVisible = !staticMort.IsVisible; });
-            keyboardActions.Add(Keys.D2, () => { animatedVita.IsVisible = !animatedVita.IsVisible; });
-            keyboardActions.Add(Keys.D3, () => { mobileStaticTart.IsVisible = !mobileStaticTart.IsVisible; });
-            keyboardActions.Add(Keys.D4, () => { mobileAnimatedDoux.IsVisible = !mobileAnimatedDoux.IsVisible; });
+            keyboardActions.Add(Keys.D1, () => { sprites[5].Focus(sprites); });
+            keyboardActions.Add(Keys.D2, () => { sprites[6].Focus(sprites); });
+            keyboardActions.Add(Keys.D3, () => { sprites[7].Focus(sprites); });
+            keyboardActions.Add(Keys.D4, () => { sprites[8].Focus(sprites); });
+            //Extra
+            keyboardActions.Add(Keys.A, () => { foreach (ISprite sprite in sprites) sprite.IsVisible = true; });
+            keyboardActions.Add(Keys.N, () => { foreach (ISprite sprite in sprites) sprite.IsVisible = false; });
             //Mouse
             mouseActions = new MouseActions();
             mouseActions.Add(MouseActions.MouseButtons.Right, Exit);
-            mouseActions.Add(MouseActions.MousePositions.Quad1, () => { staticMort.IsVisible = !staticMort.IsVisible; });
-            mouseActions.Add(MouseActions.MousePositions.Quad2, () => { animatedVita.IsVisible = !animatedVita.IsVisible; });
-            mouseActions.Add(MouseActions.MousePositions.Quad3, () => { mobileStaticTart.IsVisible = !mobileStaticTart.IsVisible; });
-            mouseActions.Add(MouseActions.MousePositions.Quad4, () => { mobileAnimatedDoux.IsVisible = !mobileAnimatedDoux.IsVisible; });
+            mouseActions.Add(MouseActions.MousePositions.Quad1, () => { sprites[5].Focus(sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad2, () => { sprites[6].Focus(sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad3, () => { sprites[7].Focus(sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad4, () => { sprites[8].Focus(sprites); });
             //Default
             base.Initialize();
         }
@@ -59,30 +56,39 @@ namespace Sprint0
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //Font
             SpriteFont label = Content.Load<SpriteFont>("Label");
-            screenText = new Text(label, "Credits\nProgram made by: Skylar Stephens\nSprites from: https://arks.itch.io/dino-characters\n https://www.spriters-resource.com/nes/legendofzelda/sheet/31805/");
+            ISprite screenText = new Text(label, "Credits\nProgram made by: Skylar Stephens\nSprites from: https://arks.itch.io/dino-characters\n https://www.spriters-resource.com/nes/legendofzelda/sheet/31805/", new Vector2(400, 700));
             //Sprites I got before seeing not to use an Atlas
             Texture2D vita = Content.Load<Texture2D>("Sprites/Sheets/Vita");
-            animatedVita = new AnimatedSprite(vita, new Vector2(700, 400), 1, 24);
+            ISprite animatedVita = new AnimatedSprite(vita, new Vector2(700, 400), 1, 24);
             Texture2D mort = Content.Load<Texture2D>("Sprites/Singles/Idle Mort");
-            staticMort = new StaticSprite(mort, new Vector2(800, 400));
+            ISprite staticMort = new StaticSprite(mort, new Vector2(800, 400));
             Texture2D doux = Content.Load<Texture2D>("Sprites/Sheets/Doux");
-            mobileAnimatedDoux = new MobileAnimatedSprite(doux, new Vector2(750, 400), 1, 24);
+            ISprite mobileAnimatedDoux = new MobileAnimatedSprite(doux, new Vector2(750, 400), 1, 24);
             Texture2D tart = Content.Load<Texture2D>("Sprites/Singles/Idle Tart");
-            mobileStaticTart = new MobileStaticSprite(tart, new Vector2(950, 800));
+            ISprite mobileStaticTart = new MobileStaticSprite(tart, new Vector2(950, 800));
             //Sprites I got after seeing not to use an Atlas
             Texture2D overworldEnemies = Content.Load<Texture2D>("Overworld Enemies");
-            staticOctorok = new StaticSprite(overworldEnemies, new Vector2(800, 300), new Rectangle(1, 11, 16, 16));
-            mobileStaticOctorok = new MobileStaticSprite(overworldEnemies, new Vector2(650, 100), new Rectangle(1, 28, 16, 16));
+            ISprite staticOctorok = new StaticSprite(overworldEnemies, new Vector2(800, 300), new Rectangle(1, 11, 16, 16));
+            ISprite mobileStaticOctorok = new MobileStaticSprite(overworldEnemies, new Vector2(650, 100), new Rectangle(1, 28, 16, 16));
+            ISprite animatedMoblin = new AnimatedSprite(overworldEnemies, new Vector2(1000, 300), 2, 4, new Rectangle(82, 11, 64, 32), 1);
+            ISprite mobileAnimatedTektite = new MobileAnimatedSprite(overworldEnemies, new Vector2(400, 300), 1, 4, new Rectangle(162, 90, 64, 16), 1);
 
+            sprites = new List<ISprite>()
+            {
+                screenText,
+                staticMort, mobileStaticTart, animatedVita, mobileAnimatedDoux,
+                staticOctorok, mobileStaticOctorok, animatedMoblin, mobileAnimatedTektite
+            };
+            //Default state
+            sprites[5].Focus(sprites);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            animatedVita.Update(gameTime);
-            mobileAnimatedDoux.Update(gameTime);
-            mobileStaticTart.Update(gameTime);
-            //New sprites
-            mobileStaticOctorok.Update(gameTime);
+            foreach (ISprite sprite in sprites)
+            {
+                sprite.Update(gameTime);
+            };
             //Checks if the window is in focus, stops input when game not on screen
             if (IsActive)
             {
@@ -97,16 +103,10 @@ namespace Sprint0
             GraphicsDevice.Clear(Color.Gray);
             //Overloaded with samplterState, fixes blurry sprites from upscaling
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            //Font
-            screenText.Draw(spriteBatch, new Vector2(400, 700));
-            //Sprites
-            staticMort.Draw(spriteBatch);
-            animatedVita.Draw(spriteBatch);
-            mobileAnimatedDoux.Draw(spriteBatch);
-            mobileStaticTart.Draw(spriteBatch);
-            //New Sprites
-            staticOctorok.Draw(spriteBatch);
-            mobileStaticOctorok.Draw(spriteBatch);
+            foreach (ISprite sprite in sprites)
+            {
+                sprite.Draw(spriteBatch);
+            };
             //Default
             base.Draw(gameTime);
             spriteBatch.End();

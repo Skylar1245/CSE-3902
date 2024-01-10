@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Sprint0.Scripts.Interfaces;
+using System.Collections.Generic;
 
 namespace Sprint0.Scripts
 {
@@ -52,6 +53,18 @@ namespace Sprint0.Scripts
                 destinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width * 4, height * 4);
             }
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
+        }
+
+        public void Focus(List<ISprite> sprites)
+        {
+            this.IsVisible = true;
+            foreach (ISprite sprite in sprites)
+            {
+                if (this != sprite)
+                {
+                    sprite.IsVisible = false;
+                }
+            }
         }
     }
 }

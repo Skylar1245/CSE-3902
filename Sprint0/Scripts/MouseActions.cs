@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Input;
 using Sprint0.Scripts.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Xml.Serialization;
 
 namespace Sprint0.Scripts
 {
@@ -59,7 +57,6 @@ namespace Sprint0.Scripts
 
         private void LeftClick()
         {
-            Debug.WriteLine("Left click at " + state.Position);
             if (state.Position.Y <= 450)
             {
                 if (state.Position.X <= 800)
