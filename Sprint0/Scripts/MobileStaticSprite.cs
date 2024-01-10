@@ -6,6 +6,11 @@ namespace Sprint0.Scripts
 {
     internal class MobileStaticSprite : StaticSprite
     {
+
+=========
+    internal class MobileStaticSprite : StaticSprite
+    {
+>>>>>>>>> Temporary merge branch 2
         private int timeSinceLastFrame = 0;
         private int millisecondsPerFrame = 100;
 
@@ -28,12 +33,34 @@ namespace Sprint0.Scripts
 
         public new void Update(GameTime gameTime)
         {
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > millisecondsPerFrame)
+            }
+                    currentFrame = 0;
+            }
+        }
+
+        private void Move()
         {
-                timeSinceLastFrame -= millisecondsPerFrame;
+            _ = Position.X > 1650 ? Position = new Vector2(-50, Position.Y) : Position = new Vector2(Position.X + 10, Position.Y);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (!IsVisible) return;
+            int width = Texture.Width;
+            int height = Texture.Height;
+
+            Rectangle sourceRectangle = new Rectangle(0, 0, width, height);
+            Rectangle destinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width * 4, height * 4);
+
+            //Overloaded with samplterState, fixes blurry sprites from upscaling
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
+            spriteBatch.End();
+=========
                 Move();
             }
+
+>>>>>>>>> Temporary merge branch 2
         }
     }
 }
