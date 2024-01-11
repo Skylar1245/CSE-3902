@@ -16,7 +16,7 @@ namespace Sprint0
         public int TimeSinceLastFrame { get; set; }
         public int MillisecondsPerFrame { get; set; }
 
-        public Rectangle SpritePosition { get; set; }
+        public Rectangle TexturePosition { get; set; }
         public int Gap { get; set; }
         public int CurrentFrame { get; set; }
         public int TotalFrames { get; set; }

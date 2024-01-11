@@ -14,7 +14,7 @@ namespace Sprint0
         public int Rows { get; set; }
         public int Columns { get; set; }
         //Animation frames
-        public Rectangle SpritePosition { get; set; }
+        public Rectangle TexturePosition { get; set; }
         public int Gap { get; set; }
         public int CurrentFrame { get; set; }
         public int TotalFrames { get; set; }
@@ -53,7 +53,7 @@ namespace Sprint0
             CurrentFrame = 0;
             TotalFrames = Rows * Columns;
             IsVisible = true;
-            SpritePosition = spritePosition;
+            TexturePosition = spritePosition;
             Gap = gap;
 
             TimeSinceLastFrame = 0;
@@ -66,10 +66,13 @@ namespace Sprint0
             if (TimeSinceLastFrame > MillisecondsPerFrame)
             {
                 TimeSinceLastFrame -= MillisecondsPerFrame;
-                CurrentFrame++;
-                if (IsVisible) Move();
-                if (CurrentFrame == TotalFrames)
-                    CurrentFrame = 0;
+                if (IsVisible)
+                {
+                    CurrentFrame++;
+                    Move();
+                    if (CurrentFrame == TotalFrames)
+                        CurrentFrame = 0;
+                }
             }
         }
 
@@ -93,13 +96,13 @@ namespace Sprint0
 
         private void MessyDraw(SpriteBatch spriteBatch)
         {
-            int width = SpritePosition.Width / Columns;
-            int height = SpritePosition.Height / Rows;
+            int width = TexturePosition.Width / Columns;
+            int height = TexturePosition.Height / Rows;
             int row = CurrentFrame / Columns;
             int column = CurrentFrame % Columns;
 
-            int startX = (width * column) + SpritePosition.X;
-            int startY = (height * row) + SpritePosition.Y;
+            int startX = (width * column) + TexturePosition.X;
+            int startY = (height * row) + TexturePosition.Y;
 
             if (CurrentFrame >= Columns)
             {
@@ -122,7 +125,7 @@ namespace Sprint0
         {
             if (!IsVisible) return;
 
-            if (SpritePosition.Center == Point.Zero)
+            if (TexturePosition.Center == Point.Zero)
             {
                 TidyDraw(spriteBatch);
             }

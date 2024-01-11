@@ -12,7 +12,7 @@ namespace Sprint0.Scripts
         public Texture2D Texture { get; set; }
         public int TimeSinceLastFrame { get; set; }
         public int MillisecondsPerFrame { get; set; }
-        public Rectangle SpritePosition { get; set; }
+        public Rectangle TexturePosition { get; set; }
         public int Gap { get; set; }
         public int CurrentFrame { get; set; }
         public int TotalFrames { get; set; }
@@ -28,8 +28,18 @@ namespace Sprint0.Scripts
         {
             Texture = texture;
             Position = position;
-            SpritePosition = spritePosition;
+            TexturePosition = spritePosition;
             IsVisible = true;
+        }
+        public void Focus(List<ISprite> sprites)
+        {
+            foreach (ISprite sprite in sprites)
+            {
+                sprite.IsVisible = false;
+
+            }
+            //In case this is also in sprites
+            this.IsVisible = true;
         }
 
         public void Update(GameTime gameTime = null)
@@ -42,7 +52,7 @@ namespace Sprint0.Scripts
             if (!IsVisible) return;
             int width, height;
             Rectangle sourceRectangle, destinationRectangle;
-            if (SpritePosition.Center == Point.Zero)
+            if (TexturePosition.Center == Point.Zero)
             {
                 width = Texture.Width;
                 height = Texture.Height;
@@ -52,24 +62,12 @@ namespace Sprint0.Scripts
             }
             else
             {
-                width = SpritePosition.Width;
-                height = SpritePosition.Height;
-                sourceRectangle = SpritePosition;
+                width = TexturePosition.Width;
+                height = TexturePosition.Height;
+                sourceRectangle = TexturePosition;
                 destinationRectangle = new Rectangle((int)Position.X, (int)Position.Y, width * 4, height * 4);
             }
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
-        }
-
-        public void Focus(List<ISprite> sprites)
-        {
-            this.IsVisible = true;
-            foreach (ISprite sprite in sprites)
-            {
-                if (this != sprite)
-                {
-                    sprite.IsVisible = false;
-                }
-            }
         }
     }
 }

@@ -54,31 +54,33 @@ namespace Sprint0
 
         protected override void LoadContent()
         {
+            Vector2 ScreenCenter = new(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //Font
             SpriteFont label = Content.Load<SpriteFont>("Label");
             ISprite screenText = new Text(label, "Credits\nProgram made by: Skylar Stephens\nSprites from: https://arks.itch.io/dino-characters\n https://www.spriters-resource.com/nes/legendofzelda/sheet/31805/", new Vector2(400, 700));
             //Sprites I got before seeing not to use an Atlas
-            Texture2D vita = Content.Load<Texture2D>("Sprites/Sheets/Vita");
-            ISprite animatedVita = new AnimatedSprite(vita, new Vector2(700, 400), 1, 24);
             Texture2D mort = Content.Load<Texture2D>("Sprites/Singles/Idle Mort");
-            ISprite staticMort = new StaticSprite(mort, new Vector2(800, 400));
-            Texture2D doux = Content.Load<Texture2D>("Sprites/Sheets/Doux");
-            ISprite mobileAnimatedDoux = new MobileAnimatedSprite(doux, new Vector2(750, 400), 1, 24);
             Texture2D tart = Content.Load<Texture2D>("Sprites/Singles/Idle Tart");
-            ISprite mobileStaticTart = new MobileStaticSprite(tart, new Vector2(950, 800));
+            Texture2D vita = Content.Load<Texture2D>("Sprites/Sheets/Vita");
+            Texture2D doux = Content.Load<Texture2D>("Sprites/Sheets/Doux");
+            ISprite Mort = new StaticSprite(mort, new Vector2(ScreenCenter.X + 50, ScreenCenter.Y));
+            ISprite Tart = new MobileStaticSprite(tart, new Vector2(ScreenCenter.X + 300, ScreenCenter.Y - 100));
+            ISprite Vita = new AnimatedSprite(vita, new Vector2(ScreenCenter.X + 200, ScreenCenter.Y), 1, 24);
+            ISprite Doux = new MobileAnimatedSprite(doux, new Vector2(ScreenCenter.X + 300, ScreenCenter.Y - 250), 1, 24);
             //Sprites I got after seeing not to use an Atlas
-            Texture2D overworldEnemies = Content.Load<Texture2D>("Overworld Enemies");
-            ISprite staticOctorok = new StaticSprite(overworldEnemies, new Vector2(800, 300), new Rectangle(1, 11, 16, 16));
-            ISprite mobileStaticOctorok = new MobileStaticSprite(overworldEnemies, new Vector2(650, 100), new Rectangle(1, 28, 16, 16));
-            ISprite animatedMoblin = new AnimatedSprite(overworldEnemies, new Vector2(1000, 300), 2, 4, new Rectangle(82, 11, 64, 32), 1);
-            ISprite mobileAnimatedTektite = new MobileAnimatedSprite(overworldEnemies, new Vector2(400, 300), 1, 4, new Rectangle(162, 90, 64, 16), 1);
+            Texture2D OverworldEnemies = Content.Load<Texture2D>("Overworld Enemies");
+            ISprite Octorok = new StaticSprite(OverworldEnemies, new Vector2(ScreenCenter.X - 50, ScreenCenter.Y), new Rectangle(1, 11, 16, 16));
+            ISprite BlueOctorok = new MobileStaticSprite(OverworldEnemies, new Vector2(ScreenCenter.X - 300, ScreenCenter.Y + 100), new Rectangle(1, 28, 16, 16));
+            ISprite Moblin = new AnimatedSprite(OverworldEnemies, new Vector2(ScreenCenter.X - 200, ScreenCenter.Y), 2, 4, new Rectangle(82, 11, 64, 32), 1);
+            ISprite Tektite = new MobileAnimatedSprite(OverworldEnemies, new Vector2(ScreenCenter.X - 300, ScreenCenter.Y + 250), 1, 4, new Rectangle(162, 90, 64, 16), 1);
 
             sprites = new List<ISprite>()
             {
                 screenText,
-                staticMort, mobileStaticTart, animatedVita, mobileAnimatedDoux,
-                staticOctorok, mobileStaticOctorok, animatedMoblin, mobileAnimatedTektite
+                Mort, Tart, Vita, Doux,
+                Octorok, BlueOctorok, Moblin, Tektite
             };
             //Default state
             sprites[5].Focus(sprites);
