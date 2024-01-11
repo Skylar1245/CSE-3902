@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Scripts.Interfaces;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Sprint0.Scripts
 {
@@ -17,25 +19,14 @@ namespace Sprint0.Scripts
         public int CurrentFrame { get; set; }
         public int TotalFrames { get; set; }
 
-        public MobileStaticSprite(Texture2D texture, Vector2 position)
-        {
-            Texture = texture;
-            Position = position;
-            IsVisible = true;
-
-            TimeSinceLastFrame = 0;
-            MillisecondsPerFrame = 100;
-        }
-
-        public MobileStaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition)
+        public MobileStaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition = default, int millisecondsPerFrame = default)
         {
             Texture = texture;
             Position = position;
             TexturePosition = spritePosition;
             IsVisible = true;
-
             TimeSinceLastFrame = 0;
-            MillisecondsPerFrame = 100;
+            MillisecondsPerFrame = millisecondsPerFrame;
         }
 
         private void Move()

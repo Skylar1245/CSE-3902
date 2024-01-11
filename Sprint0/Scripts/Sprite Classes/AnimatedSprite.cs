@@ -30,7 +30,7 @@ namespace Sprint0
         /// <param name="texture"></param> 
         /// <param name="rows"></param>
         /// <param name="columns"></param>
-        public AnimatedSprite(Texture2D texture, Vector2 position, int rows, int columns)
+        public AnimatedSprite(Texture2D texture, Vector2 position, int rows, int columns, Rectangle texturePosition = default, int gap = default, int millisecondsPerFrame = default)
         {
             Position = position;
             Texture = texture;
@@ -39,25 +39,10 @@ namespace Sprint0
             CurrentFrame = 0;
             TotalFrames = Rows * Columns;
             IsVisible = true;
-
-            TimeSinceLastFrame = 0;
-            MillisecondsPerFrame = 500;
-        }
-
-        public AnimatedSprite(Texture2D texture, Vector2 position, int rows, int columns, Rectangle spritePosition, int gap)
-        {
-            Position = position;
-            Texture = texture;
-            Rows = rows;
-            Columns = columns;
-            CurrentFrame = 0;
-            TotalFrames = Rows * Columns;
-            IsVisible = true;
-            TexturePosition = spritePosition;
+            TexturePosition = texturePosition;
             Gap = gap;
-
             TimeSinceLastFrame = 0;
-            MillisecondsPerFrame = 500;
+            MillisecondsPerFrame = millisecondsPerFrame;
         }
 
         public void Update(GameTime gameTime)

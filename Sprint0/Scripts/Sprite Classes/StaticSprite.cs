@@ -17,20 +17,21 @@ namespace Sprint0.Scripts
         public int CurrentFrame { get; set; }
         public int TotalFrames { get; set; }
 
-        public StaticSprite(Texture2D texture, Vector2 position)
-        {
-            Texture = texture;
-            Position = position;
-            IsVisible = true;
-        }
+        //public StaticSprite(Texture2D texture, Vector2 position)
+        //{
+        //    Texture = texture;
+        //    Position = position;
+        //    IsVisible = true;
+       //}
 
-        public StaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition)
+        public StaticSprite(Texture2D texture, Vector2 position, Rectangle spritePosition = default)
         {
             Texture = texture;
             Position = position;
             TexturePosition = spritePosition;
             IsVisible = true;
         }
+
         public void Focus(List<ISprite> sprites)
         {
             foreach (ISprite sprite in sprites)
