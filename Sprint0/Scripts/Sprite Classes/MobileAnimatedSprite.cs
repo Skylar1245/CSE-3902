@@ -1,28 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Scripts.Interfaces;
+using Sprint0.Scripts.Sprite_Classes;
 using System.Collections.Generic;
 
 namespace Sprint0
 {
 
-    internal class MobileAnimatedSprite : ISprite
+    internal class MobileAnimatedSprite : AbstractSprite, ISprite
     {
-        public bool IsVisible { get; set; }
-        public Vector2 Position { get; set; }
-        public Texture2D Texture { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
-        //Animation frames
-        public Rectangle TexturePosition { get; set; }
-        public int Gap { get; set; }
-        public int CurrentFrame { get; set; }
-        public int TotalFrames { get; set; }
-        //Slow animations
-        public int TimeSinceLastFrame { get; set; }
-        public int MillisecondsPerFrame { get; set; }
-
-
         /// <summary>
         /// Constructor for AnimatedSprite Class. <paramref name="texture"/> stores which Atlas to read from,
         /// <paramref name="columns"/> is the amount of Columns in the atlas and 
@@ -46,7 +34,7 @@ namespace Sprint0
             MillisecondsPerFrame = millisecondsPerFrame;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             TimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (TimeSinceLastFrame > MillisecondsPerFrame)
@@ -107,7 +95,7 @@ namespace Sprint0
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (!IsVisible) return;
 
@@ -118,18 +106,6 @@ namespace Sprint0
             else
             {
                 MessyDraw(spriteBatch);
-            }
-        }
-
-        public void Focus(List<ISprite> sprites)
-        {
-            this.IsVisible = true;
-            foreach (ISprite sprite in sprites)
-            {
-                if (this != sprite)
-                {
-                    sprite.IsVisible = false;
-                }
             }
         }
     }

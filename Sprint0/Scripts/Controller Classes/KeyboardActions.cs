@@ -10,33 +10,27 @@ namespace Sprint0.Scripts
     {
         public Dictionary<object, Action> Mappings { get; }
 
-        public int TimeSinceLastFrame { get; set; }
-        public int MillisecondsPerFrame { get; set; }
-
+        private KeyboardState previousState;
         public KeyboardActions()
         {
+
             Mappings = new Dictionary<object, Action>();
-            TimeSinceLastFrame = 0;
-            MillisecondsPerFrame = 100;
+            previousState = Keyboard.GetState();
         }
 
         public void Update(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
+            KeyboardState currentState = Keyboard.GetState();
 
-            TimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (TimeSinceLastFrame > MillisecondsPerFrame)
+            foreach (object obj in Mappings.Keys)
             {
-                TimeSinceLastFrame -= MillisecondsPerFrame;
-                foreach (object obj in Mappings.Keys)
+                Keys key = (Keys)obj;
+                if (currentState.IsKeyDown(key) && previousState.IsKeyUp(key))
                 {
-                    Keys key = (Keys)obj;
-                    if (state.IsKeyDown(key))
-                    {
-                        Mappings[key].Invoke();
-                    }
+                    Mappings[key].Invoke();
                 }
             }
+            previousState = currentState;
         }
 
         public void Add(object key, Action action)

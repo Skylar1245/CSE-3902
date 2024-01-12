@@ -14,14 +14,6 @@ namespace Sprint0.Scripts.Interfaces
         /// </summary>
         Dictionary<object, Action> Mappings { get; }
         /// <summary>
-        /// Time since last frame occurred, used to with millisecondsPerFrame.
-        /// </summary>
-        int TimeSinceLastFrame { get; set; }
-        /// <summary>
-        /// Time allotted per frame, used with timeSinceLastFrame.
-        /// </summary>
-        int MillisecondsPerFrame { get; set; }
-        /// <summary>
         /// Update method.
         /// </summary>
         /// <param name="gameTime"></param>

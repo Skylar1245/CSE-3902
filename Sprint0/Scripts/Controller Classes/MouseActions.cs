@@ -28,31 +28,32 @@ namespace Sprint0.Scripts
             Quad4
         }
         public Dictionary<object, Action> Mappings { get; }
-        public int TimeSinceLastFrame { get; set; }
-        public int MillisecondsPerFrame { get; set; }
-        public MouseState state = Mouse.GetState();
+
+        private MouseState previousState;
+        private MouseState currentState;
         public MouseActions()
         {
             Mappings = new Dictionary<object, Action>
             {
                 { MouseButtons.Left, LeftClick }
             };
+            previousState = Mouse.GetState();
         }
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentState = Mouse.GetState();
+            currentState = Mouse.GetState();
 
-            if (state.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed)
+            if (currentState.LeftButton == ButtonState.Pressed && previousState.LeftButton == ButtonState.Released)
             {
                 Mappings[MouseButtons.Left].Invoke();
             }
-            if (state.RightButton == ButtonState.Released && currentState.RightButton == ButtonState.Pressed)
+            if (currentState.RightButton == ButtonState.Pressed && previousState.RightButton == ButtonState.Released)
             {
                 Mappings[MouseButtons.Right].Invoke();
             }
 
-            state = Mouse.GetState();
+            previousState = currentState;
         }
 
         public void Add(object key, Action action)
@@ -62,9 +63,9 @@ namespace Sprint0.Scripts
 
         private void LeftClick()
         {
-            if (state.Position.Y <= 450)
+            if (currentState.Position.Y <= 450)
             {
-                if (state.Position.X <= 800)
+                if (currentState.Position.X <= 800)
                 {
                     Mappings[MousePositions.Quad1].Invoke();
                 }
@@ -75,7 +76,7 @@ namespace Sprint0.Scripts
             }
             else
             {
-                if (state.Position.X < 800)
+                if (currentState.Position.X < 800)
                 {
                     Mappings[MousePositions.Quad3].Invoke();
                 }
