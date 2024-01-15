@@ -1,14 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.Scripts.Interfaces;
-using Sprint0.Scripts.Sprite_Classes;
 using System.Collections.Generic;
 
 namespace Sprint0
 {
 
-    internal class MobileAnimatedSprite : AbstractSprite, ISprite
+    internal class MobileAnimatedSprite : ISprite
     {
+        public Texture2D Texture { get; set; }
+        public Rectangle TexturePosition { get; set; }
+        public int Gap { get; set; }
+        public bool IsVisible { get; set; }
+        public Vector2 Position { get; set; }
+        public int CurrentFrame { get; set; }
+        public int TotalFrames { get; set; }
+        public int MillisecondsPerFrame { get; set; }
+        public int TimeSinceLastFrame { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
         /// <summary>
@@ -34,7 +42,7 @@ namespace Sprint0
             MillisecondsPerFrame = millisecondsPerFrame;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             TimeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (TimeSinceLastFrame > MillisecondsPerFrame)
@@ -95,7 +103,7 @@ namespace Sprint0
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (!IsVisible) return;
 

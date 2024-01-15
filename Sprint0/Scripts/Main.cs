@@ -28,26 +28,41 @@ namespace Sprint0
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
+        /// <summary>
+        /// Focuses on <paramref name="spriteToFocus"/> and sets all sprites in <paramref name="sprites"/> to invisible
+        /// </summary>
+        /// <param name="spriteToFocus"></param>
+        /// <param name="sprites"></param>
+        private static void Focus(ISprite spriteToFocus, List<ISprite> sprites)
+        {
+            foreach (ISprite sprite in sprites)
+            {
+                sprite.IsVisible = false;
+
+            }
+            spriteToFocus.IsVisible = true;
+        }
+
 
         protected override void Initialize()
         {
             //Keys
             keyboardActions = new KeyboardActions();
             keyboardActions.Add(Keys.D0, Exit);
-            keyboardActions.Add(Keys.D1, () => { sprites[5].Focus(sprites); });
-            keyboardActions.Add(Keys.D2, () => { sprites[6].Focus(sprites); });
-            keyboardActions.Add(Keys.D3, () => { sprites[7].Focus(sprites); });
-            keyboardActions.Add(Keys.D4, () => { sprites[8].Focus(sprites); });
+            keyboardActions.Add(Keys.D1, () => { Focus(sprites[5], sprites); });
+            keyboardActions.Add(Keys.D2, () => { Focus(sprites[6], sprites); });
+            keyboardActions.Add(Keys.D3, () => { Focus(sprites[7], sprites); });
+            keyboardActions.Add(Keys.D4, () => { Focus(sprites[8], sprites); });
             //Extra
             keyboardActions.Add(Keys.A, () => { foreach (ISprite sprite in sprites) sprite.IsVisible = true; });
             keyboardActions.Add(Keys.N, () => { foreach (ISprite sprite in sprites) sprite.IsVisible = false; });
             //Mouse
             mouseActions = new MouseActions();
             mouseActions.Add(MouseActions.MouseButtons.Right, Exit);
-            mouseActions.Add(MouseActions.MousePositions.Quad1, () => { sprites[5].Focus(sprites); });
-            mouseActions.Add(MouseActions.MousePositions.Quad2, () => { sprites[6].Focus(sprites); });
-            mouseActions.Add(MouseActions.MousePositions.Quad3, () => { sprites[7].Focus(sprites); });
-            mouseActions.Add(MouseActions.MousePositions.Quad4, () => { sprites[8].Focus(sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad1, () => { Focus(sprites[5], sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad2, () => { Focus(sprites[6], sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad3, () => { Focus(sprites[7], sprites); });
+            mouseActions.Add(MouseActions.MousePositions.Quad4, () => { Focus(sprites[8], sprites); });
             //Default
             base.Initialize();
         }
@@ -102,7 +117,7 @@ namespace Sprint0
                 Octorok, BlueOctorok, Moblin, Tektite
             };
             //Default state
-            sprites[5].Focus(sprites);
+            Focus(sprites[5], sprites);
         }
 
         protected override void Update(GameTime gameTime)

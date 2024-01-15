@@ -46,11 +46,6 @@ namespace Sprint0.Scripts.Interfaces
         /// </summary>
         int TimeSinceLastFrame { get; set; }
         /// <summary>
-        /// Makes this sprite the only visible sprite in <paramref name="sprites"/>.
-        /// </summary>
-        /// <param name="sprites"></param>
-        void Focus(List<ISprite> sprites);
-        /// <summary>
         /// Update method of this sprite, optionally pass 
         /// <paramref name="gameTime"/> for animated sprites.
         /// </summary>
