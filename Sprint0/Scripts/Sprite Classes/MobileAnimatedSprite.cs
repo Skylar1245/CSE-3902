@@ -62,7 +62,10 @@ namespace Sprint0
         {
             _ = Position.X > 1650 ? Position = new Vector2(-50, Position.Y) : Position = new Vector2(Position.X + 10, Position.Y);
         }
-
+        /// <summary>
+        /// Draws a clean sprite sheet to the screen
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void TidyDraw(SpriteBatch spriteBatch)
         {
             int width = Texture.Width / Columns;
@@ -76,6 +79,10 @@ namespace Sprint0
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
         }
 
+        /// <summary>
+        /// Draws the sprite with the inclusion of it being a not clean formatted sprite sheet
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void MessyDraw(SpriteBatch spriteBatch)
         {
             int width = TexturePosition.Width / Columns;
